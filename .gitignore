@@ -1,0 +1,53 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Next.js Build and Cache
+/.next/
+/out/
+/build
+
+# Production Build Artifacts
+dist/
+
+# SWC Compiler Cache
+.swc/
+
+# Testing and Coverage
+/coverage
+
+# Debug and Log Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local Environment Files
+# NEVER commit sensitive API keys or secrets to version control
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel Deployment Metadata
+.vercel
+
+# TypeScript Compilation Info
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor / IDE Settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS System Files
+.DS_Store
