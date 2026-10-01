@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 import { FIXED_DT } from "./constants";
->>>>>>> Stashed changes
 import { Simulation } from "./Simulation";
 
 export class SimulationLoop {
@@ -20,23 +17,13 @@ export class SimulationLoop {
 
     this.lastTime = null;
 
-<<<<<<< Updated upstream
-=======
     let accumulator = 0;
->>>>>>> Stashed changes
     const loop = (currentTime: number) => {
       if (this.lastTime === null) {
         this.lastTime = currentTime;
       }
 
       const dt = (currentTime - this.lastTime) / 1000;
-<<<<<<< Updated upstream
-
-      this.lastTime = currentTime;
-
-      this.simulation.update(dt);
-
-=======
       accumulator += dt;
       while (accumulator >= FIXED_DT) {
         this.simulation.update(FIXED_DT);
@@ -45,7 +32,6 @@ export class SimulationLoop {
 
       this.lastTime = currentTime;
 
->>>>>>> Stashed changes
       this.animationFrameId = requestAnimationFrame(loop);
     };
 
@@ -56,14 +42,6 @@ export class SimulationLoop {
     if (this.animationFrameId === null) {
       return;
     }
-<<<<<<< Updated upstream
-
-    cancelAnimationFrame(this.animationFrameId);
-
-    this.animationFrameId = null;
-    this.lastTime = null;
-  }
-=======
     cancelAnimationFrame(this.animationFrameId);
     this.animationFrameId = null;
     this.lastTime = null;
@@ -77,5 +55,4 @@ export class SimulationLoop {
     cancelAnimationFrame(this.animationFrameId);
     this.animationFrameId = null;
   }
->>>>>>> Stashed changes
 }

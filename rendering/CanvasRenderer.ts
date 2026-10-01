@@ -1,3 +1,4 @@
+"use client";
 import { RefObject, useRef } from "react";
 import { PhysicsObject } from "@/physics/types";
 import { worldToScreen } from "./worldToScreen";

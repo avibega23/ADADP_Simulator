@@ -1,3 +1,4 @@
+"use client";
 import { useRef } from "react";
 import { Simulation } from "@/simulation/Simulation";
 import { SimulationLoop } from "@/simulation/SimulationLoop";
@@ -33,7 +34,7 @@ const useSimulation = ({
         x: 0,
         y: -EARTH_GRAVITY,
       },
-      radius: 10,
+      radius: 10 / 1600,
       mass: 1,
     };
 
