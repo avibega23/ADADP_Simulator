@@ -1,4 +1,8 @@
 import { PhysicsObject } from "./types";
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 export function updateFreeFall(
   object: PhysicsObject,
   dt: number,

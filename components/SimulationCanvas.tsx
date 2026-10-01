@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< Updated upstream
 import { useEffect, useRef } from "react";
 import { Simulation } from "@/simulation/Simulation";
 import { SimulationLoop } from "@/simulation/SimulationLoop";
@@ -75,5 +76,32 @@ export default function SimulationCanvas() {
       height={500}
       style={{ backgroundColor: "red" }}
     />
+=======
+import useSimulation from "@/hooks/useSimulation";
+import useCanvasRenderer from "@/rendering/CanvasRenderer";
+
+export default function SimulationCanvas() {
+  const { canvasRef, createObject } = useCanvasRenderer();
+  const { playSimulation, pauseSimulation, resetSimulation } = useSimulation({
+    createObject,
+  });
+
+  return (
+    <>
+      <div className="flex gap-2">
+        <button onClick={playSimulation}>Play</button>
+        <button onClick={pauseSimulation}>Pause</button>
+        <button onClick={resetSimulation}>Reset</button>
+      </div>
+      <br />
+      <br />
+      <canvas
+        ref={canvasRef}
+        width={800}
+        height={500}
+        style={{ backgroundColor: "red" }}
+      />
+    </>
+>>>>>>> Stashed changes
   );
 }
