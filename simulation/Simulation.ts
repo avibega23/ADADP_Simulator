@@ -16,7 +16,7 @@ export class Simulation {
       this.object,
       { x: 0.5, y: 0.3125 },
       10 / 1600,
-      2,
+      1,
     );
     this.time += dt;
   }

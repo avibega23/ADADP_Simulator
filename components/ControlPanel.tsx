@@ -2,9 +2,11 @@
 import useControlPanelStore from "@/store/useControlPanelStore";
 
 const ControlPanel = () => {
-  const { groundDimensions, changeGroundDimension } = useControlPanelStore();
+  const { groundDimensions, changeGroundDimension, gravity, changeGravity } =
+    useControlPanelStore();
   return (
-    <>
+    <div className="text-white p-4 flex flex-col">
+      <div className="text-2xl py-2">Canvas Configuration</div>
       <div>Enter Width:</div>
       <input
         type="number"
@@ -29,7 +31,17 @@ const ControlPanel = () => {
         }}
         style={{ backgroundColor: "gray" }}
       />
-    </>
+      <div>Enter Gravity:</div>
+      <input
+        type="number"
+        value={gravity == 0 ? "" : gravity}
+        onChange={(value) => {
+          changeGravity(Number(value.target.value));
+        }}
+        style={{ backgroundColor: "gray" }}
+      />
+      <div className="text-2xl py-2">Object Configuration</div>
+    </div>
   );
 };
 

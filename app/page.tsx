@@ -1,11 +1,9 @@
-import ControlPanel from "@/components/ControlPanel";
-import SimulationCanvas from "@/components/SimulationCanvas";
+import SimulationShell from "@/components/SimulationShell";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <SimulationCanvas />
-      <ControlPanel />
+    <div className="flex h-screen flex-col">
+      <SimulationShell />
     </div>
   );
 }
