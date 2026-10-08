@@ -1,7 +1,8 @@
 "use client";
 
+import useCanvasScreenStore from "@/store/useCanvasScreenStore";
 import type { RefObject } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface SimulationCanvasProps {
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -10,10 +11,13 @@ interface SimulationCanvasProps {
 export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [dim, setDim] = useState({
-    width: 0,
-    height: 0,
-  });
+  const canvasDimensions = useCanvasScreenStore(
+    (state) => state.canvasDimensions,
+  );
+
+  const setCanvasDimensions = useCanvasScreenStore(
+    (state) => state.setCanvasDimensions,
+  );
 
   useEffect(() => {
     const element = containerRef.current;
@@ -23,16 +27,16 @@ export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
 
-      setDim({
-        width,
-        height,
+      setCanvasDimensions({
+        x: width,
+        y: height,
       });
     });
 
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, []);
+  }, [setCanvasDimensions]);
 
   return (
     <div
@@ -41,8 +45,8 @@ export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
     >
       <canvas
         ref={canvasRef}
-        width={dim.width}
-        height={dim.height}
+        width={canvasDimensions.x}
+        height={canvasDimensions.y}
         className="block"
         style={{ backgroundColor: "red" }}
       />

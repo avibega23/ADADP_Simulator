@@ -1,22 +1,35 @@
 import type { PhysicsObject } from "@/physics/types";
 import { updateFreeFall } from "@/physics/freeFall";
 import { resolveGroundCollision } from "@/physics/ground";
+import { SimulationConfig } from "./types";
 
 export class Simulation {
+  private config: SimulationConfig;
   private object: PhysicsObject;
   private time = 0;
-
-  constructor(object: PhysicsObject) {
-    this.object = object;
+  constructor(config: SimulationConfig) {
+    this.config = config;
+    this.object = {
+      position: config.object.position,
+      acceleration: {
+        x: -config.world.gravity.x,
+        y: -config.world.gravity.y,
+      },
+      radius: config.object.radius,
+      velocity: config.object.inititalVelocity,
+      mass: config.object.mass,
+    };
   }
 
   update(dt: number) {
     this.object = updateFreeFall(this.object, dt);
     this.object = resolveGroundCollision(
       this.object,
-      { x: 0.5, y: 0.3125 },
-      10 / 1600,
-      1,
+      {
+        x: this.config.world.width,
+        y: this.config.world.height,
+      },
+      this.config.collision.restitution,
     );
     this.time += dt;
   }

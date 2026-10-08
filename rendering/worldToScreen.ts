@@ -1,9 +1,11 @@
 import type { PhysicsObject } from "@/physics/types";
-
-const PIXELS_PER_METER = 1600;
-const GROUND_Y = 500;
+import useCanvasScreenStore from "@/store/useCanvasScreenStore";
+import useControlPanelStore from "@/store/useControlPanelStore";
 
 export function worldToScreen(object: PhysicsObject): PhysicsObject {
+  const state = useControlPanelStore.getState();
+  const PIXELS_PER_METER = useCanvasScreenStore.getState().PIXELS_PER_METER;
+  const GROUND_Y = state.groundConfiguration.groundDimensions.y;
   return {
     ...object,
     position: {

@@ -1,5 +1,5 @@
 "use client";
-import ControlPanel from "@/components/ControlPanel";
+import ControlPanel from "@/components/control-panel/ControlPanel";
 import SimulationCanvas from "@/components/SimulationCanvas";
 import TelemetryPanel from "@/components/telemetry/TelemetryPanel";
 import Navbar from "@/components/Navbar";
@@ -21,7 +21,7 @@ const SimulationShell = () => {
           </section>
         </main>
 
-        <aside className="flex-1 shrink-0 bg-black">
+        <aside className="min-h-0 flex-1 overflow-y-auto bg-black">
           <ControlPanel />
         </aside>
       </div>
