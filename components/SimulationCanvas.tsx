@@ -26,7 +26,6 @@ export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
 
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-
       setCanvasDimensions({
         x: width,
         y: height,
@@ -47,7 +46,7 @@ export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
         ref={canvasRef}
         width={canvasDimensions.x}
         height={canvasDimensions.y}
-        className="block"
+        className="block h-full w-full"
         style={{ backgroundColor: "red" }}
       />
     </div>

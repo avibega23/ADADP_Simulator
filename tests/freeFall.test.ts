@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { updateFreeFall } from "@/physics/freeFall";
-import { PhysicsObject } from "@/physics/types";
-import { EARTH_GRAVITY } from "@/physics/constants";
+import { updateFreeFall } from "../physics/freeFall";
+import { PhysicsObject } from "../physics/types";
+import { EARTH_GRAVITY } from "../physics/constants";
 
 describe("updateFreeFall", () => {
   test("it should increase downward velocity of the object", () => {
@@ -19,6 +19,7 @@ describe("updateFreeFall", () => {
         y: EARTH_GRAVITY,
       },
       mass: 1,
+      radius: 10,
     };
     const result = updateFreeFall(object, 1);
     expect(result.velocity.y).toBeCloseTo(9.81);
@@ -38,6 +39,7 @@ describe("updateFreeFall", () => {
         y: EARTH_GRAVITY,
       },
       mass: 1,
+      radius: 10,
     };
     for (let i = 0; i < 5; i++) {
       object = updateFreeFall(object, 1);

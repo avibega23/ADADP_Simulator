@@ -10,7 +10,7 @@ export function worldToScreen(object: PhysicsObject): PhysicsObject {
     ...object,
     position: {
       x: object.position.x * PIXELS_PER_METER,
-      y: GROUND_Y - object.position.y * PIXELS_PER_METER,
+      y: (GROUND_Y - object.position.y) * PIXELS_PER_METER,
     },
     radius: object.radius * PIXELS_PER_METER,
   };

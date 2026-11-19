@@ -1,36 +1,24 @@
 import useCanvasScreenStore from "@/store/useCanvasScreenStore";
 import useControlPanelStore from "@/store/useControlPanelStore";
 
-export enum dimensionChangeEnum {
-  WIDTH = "WIDTH",
-  HEIGHT = "HEIGHT",
-}
-
-export const ppmSyncer = (value: dimensionChangeEnum) => {
-  const canvasState = useCanvasScreenStore.getState();
-  const controlPanelState = useControlPanelStore.getState();
-
-  if (value === dimensionChangeEnum.WIDTH) {
-    const newPpm =
-      canvasState.canvasDimensions.x /
-      controlPanelState.groundConfiguration.groundDimensions.x;
-
-    canvasState.setPixelsPerMeter(newPpm);
-
-    controlPanelState.changeGroundDimension({
-      ...controlPanelState.groundConfiguration.groundDimensions,
-      y: canvasState.canvasDimensions.y / newPpm,
-    });
+export function syncPpm(axis: "width" | "height" | "canvas") {
+  const canvasStore = useCanvasScreenStore.getState();
+  const controlStore = useControlPanelStore.getState();
+  const setPixelsPerMeter = canvasStore.setPixelsPerMeter;
+  const changeGroundDimension = controlStore.changeGroundDimension;
+  const { x: cw, y: ch } = canvasStore.canvasDimensions;
+  const g = controlStore.groundConfiguration.groundDimensions;
+  if (cw <= 0 || ch <= 0) return;
+  if (axis === "height") {
+    if (g.y <= 0) return;
+    const ppm = ch / g.y;
+    setPixelsPerMeter(ppm);
+    changeGroundDimension({ x: cw / ppm, y: g.y });
   } else {
-    const newPpm =
-      canvasState.canvasDimensions.y /
-      controlPanelState.groundConfiguration.groundDimensions.y;
-
-    canvasState.setPixelsPerMeter(newPpm);
-
-    controlPanelState.changeGroundDimension({
-      ...controlPanelState.groundConfiguration.groundDimensions,
-      x: canvasState.canvasDimensions.x / newPpm,
-    });
+    // width change OR canvas resize: lock width, derive height
+    if (g.x <= 0) return;
+    const ppm = cw / g.x;
+    setPixelsPerMeter(ppm);
+    changeGroundDimension({ x: g.x, y: ch / ppm });
   }
-};
+}

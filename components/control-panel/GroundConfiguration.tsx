@@ -1,10 +1,15 @@
 "use client";
 
 import NumberField from "@/components/control-panel/NumberField";
-import { dimensionChangeEnum, ppmSyncer } from "@/lib/ppmSyncer";
+import { syncPpm } from "@/lib/ppmSyncer";
 import useControlPanelStore from "@/store/useControlPanelStore";
 
-export default function GroundConfiguration() {
+interface GroundConfiguratoinProps {
+  onApplyConfig: () => void;
+}
+export default function GroundConfiguration({
+  onApplyConfig,
+}: GroundConfiguratoinProps) {
   const { groundConfiguration, changeGroundDimension, changeGravity } =
     useControlPanelStore();
 
@@ -20,7 +25,8 @@ export default function GroundConfiguration() {
             ...groundConfiguration.groundDimensions,
             x,
           });
-          ppmSyncer(dimensionChangeEnum.WIDTH);
+          syncPpm("width");
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -32,7 +38,8 @@ export default function GroundConfiguration() {
             ...groundConfiguration.groundDimensions,
             y,
           });
-          ppmSyncer(dimensionChangeEnum.HEIGHT);
+          syncPpm("height");
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -44,6 +51,7 @@ export default function GroundConfiguration() {
             x,
             y: groundConfiguration.gravity.y,
           });
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -55,6 +63,7 @@ export default function GroundConfiguration() {
             x: groundConfiguration.gravity.x,
             y,
           });
+          onApplyConfig();
         }}
       />
     </section>

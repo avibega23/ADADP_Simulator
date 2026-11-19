@@ -3,7 +3,12 @@
 import NumberField from "@/components/control-panel/NumberField";
 import useControlPanelStore from "@/store/useControlPanelStore";
 
-export default function ObjectConfiguration() {
+interface ObjectConfigurationProps {
+  onApplyConfig: () => void;
+}
+export default function ObjectConfiguration({
+  onApplyConfig,
+}: ObjectConfigurationProps) {
   const {
     objectConfiguration,
     changeRadius,
@@ -19,13 +24,19 @@ export default function ObjectConfiguration() {
         id="object-radius"
         name="Enter Radius:"
         value={objectConfiguration.radius}
-        onChange={changeRadius}
+        onChange={(value) => {
+          changeRadius(value);
+          onApplyConfig();
+        }}
       />
       <NumberField
         id="object-mass"
         name="Enter Mass:"
         value={objectConfiguration.mass}
-        onChange={changeMass}
+        onChange={(value) => {
+          changeMass(value);
+          onApplyConfig();
+        }}
       />
       <NumberField
         id="object-position-x"
@@ -36,6 +47,7 @@ export default function ObjectConfiguration() {
             ...objectConfiguration.position,
             x,
           });
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -47,6 +59,7 @@ export default function ObjectConfiguration() {
             ...objectConfiguration.position,
             y,
           });
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -58,6 +71,7 @@ export default function ObjectConfiguration() {
             ...objectConfiguration.initialVelocity,
             x,
           });
+          onApplyConfig();
         }}
       />
       <NumberField
@@ -69,6 +83,7 @@ export default function ObjectConfiguration() {
             ...objectConfiguration.initialVelocity,
             y,
           });
+          onApplyConfig();
         }}
       />
     </section>

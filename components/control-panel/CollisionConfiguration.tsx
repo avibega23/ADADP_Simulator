@@ -3,7 +3,12 @@
 import NumberField from "@/components/control-panel/NumberField";
 import useControlPanelStore from "@/store/useControlPanelStore";
 
-export default function CollisionConfiguration() {
+interface CollisionConfigurationProps {
+  onApplyConfig: () => void;
+}
+export default function CollisionConfiguration({
+  onApplyConfig,
+}: CollisionConfigurationProps) {
   const { collisionConfiguration, changeRestitution } = useControlPanelStore();
 
   return (
@@ -13,7 +18,10 @@ export default function CollisionConfiguration() {
         id="collision-restitution"
         name="Enter Restitution:"
         value={collisionConfiguration.restitution}
-        onChange={changeRestitution}
+        onChange={(value) => {
+          changeRestitution(value);
+          onApplyConfig();
+        }}
       />
     </section>
   );

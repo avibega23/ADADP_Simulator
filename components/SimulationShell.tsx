@@ -4,12 +4,22 @@ import SimulationCanvas from "@/components/SimulationCanvas";
 import TelemetryPanel from "@/components/telemetry/TelemetryPanel";
 import Navbar from "@/components/Navbar";
 import useCanvasRenderer from "@/rendering/CanvasRenderer";
+import useSimulation from "@/hooks/useSimulation";
 
 const SimulationShell = () => {
-  const { createObject, canvasRef } = useCanvasRenderer();
+  const { canvasRef, createObject } = useCanvasRenderer();
+  const { playSimulation, pauseSimulation, resetSimulation, applyConfig } =
+    useSimulation({
+      createObject,
+    });
+
   return (
     <>
-      <Navbar createObject={createObject} />
+      <Navbar
+        onPlay={playSimulation}
+        onPause={pauseSimulation}
+        onReset={resetSimulation}
+      />
       <div className="flex min-h-0 flex-1">
         <main className="flex min-w-0 flex-3 flex-col">
           <section className="flex-1 min-h-0 bg-green-900">
@@ -22,7 +32,7 @@ const SimulationShell = () => {
         </main>
 
         <aside className="min-h-0 flex-1 overflow-y-auto bg-black">
-          <ControlPanel />
+          <ControlPanel onApplyConfig={applyConfig} />
         </aside>
       </div>
     </>

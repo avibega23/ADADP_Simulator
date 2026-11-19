@@ -22,11 +22,6 @@ const useCanvasRenderer = (): canvasRendererReturnType => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.beginPath();
-    ctx.moveTo(0, 500);
-    ctx.lineTo(canvas.width, 500);
-    ctx.stroke();
-
-    ctx.beginPath();
     ctx.arc(
       screenObject.position.x,
       screenObject.position.y,

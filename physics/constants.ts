@@ -1,1 +1,1 @@
-export const EARTH_GRAVITY = 0.2;
+export const EARTH_GRAVITY = 9.80665;

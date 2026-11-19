@@ -1,10 +1,13 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Simulation } from "@/simulation/Simulation";
 import { SimulationLoop } from "@/simulation/SimulationLoop";
 import type { PhysicsObject } from "@/physics/types";
 import useControlPanelStore from "@/store/useControlPanelStore";
 import { SimulationConfig } from "@/simulation/types";
+import useCanvasScreenStore from "@/store/useCanvasScreenStore";
+import { syncPpm } from "@/lib/ppmSyncer";
+import { objectPositionDefaulter } from "@/lib/objectPositionDefaulter";
 
 interface simulationInput {
   createObject: (obect: PhysicsObject) => void;
@@ -13,6 +16,7 @@ interface simulationReturnType {
   playSimulation: () => void;
   resetSimulation: () => void;
   pauseSimulation: () => void;
+  applyConfig: () => void;
 }
 const useSimulation = ({
   createObject,
@@ -20,9 +24,17 @@ const useSimulation = ({
   const simulationRef = useRef<Simulation | null>(null);
   const loopRef = useRef<SimulationLoop | null>(null);
   const renderFrameRef = useRef<number | null>(null);
+  const playingRef = useRef<boolean | null>(false);
+
+  const drawOneFrame = () => {
+    const simulation = simulationRef.current;
+    if (!simulation) return;
+    createObject(simulation.getState().object);
+  };
 
   const createSimulation = () => {
     const state = useControlPanelStore.getState();
+
     const config: SimulationConfig = {
       world: {
         height: state.groundConfiguration.groundDimensions.y,
@@ -46,56 +58,66 @@ const useSimulation = ({
     simulationRef.current = simulation;
     loopRef.current = simulationLoop;
 
-    createObject({
-      position: state.objectConfiguration.position,
-      acceleration: {
-        x: -state.groundConfiguration.gravity.x,
-        y: -state.groundConfiguration.gravity.y,
-      },
-      mass: state.objectConfiguration.mass,
-      velocity: state.objectConfiguration.initialVelocity,
-      radius: state.objectConfiguration.radius,
-    });
+    drawOneFrame();
   };
 
   const playSimulation = () => {
     if (!simulationRef.current) {
-      createSimulation();
+      applyConfig();
     }
+
+    if (playingRef.current) return;
+
+    playingRef.current = true;
+
+    loopRef.current?.start();
 
     const loop = loopRef.current;
 
     if (!loop) return;
 
     const render = () => {
-      const simulation = simulationRef.current;
-      if (!simulation) return;
-      const state = simulation.getState();
-      createObject(state.object);
+      if (!playingRef.current) return;
+      drawOneFrame();
       renderFrameRef.current = requestAnimationFrame(render);
     };
 
-    loopRef.current?.start();
     render();
   };
   const resetSimulation = () => {
+    objectPositionDefaulter();
+    applyConfig();
+  };
+
+  const pauseSimulation = () => {
+    playingRef.current = false;
     loopRef.current?.pause();
 
     if (renderFrameRef.current !== null) {
       cancelAnimationFrame(renderFrameRef.current);
       renderFrameRef.current = null;
     }
+  };
+
+  const applyConfig = () => {
+    pauseSimulation();
     createSimulation();
   };
 
-  const pauseSimulation = () => {
-    loopRef.current?.pause();
-  };
+  const { x, y } = useCanvasScreenStore((s) => s.canvasDimensions);
+  useEffect(() => {
+    if (x <= 0 || y <= 0) return;
+    syncPpm("canvas");
+    objectPositionDefaulter();
+    applyConfig();
+    // later: toast "Window resized — simulation stopped"
+  }, [x, y]);
 
   return {
     playSimulation,
     pauseSimulation,
     resetSimulation,
+    applyConfig,
   };
 };
 
