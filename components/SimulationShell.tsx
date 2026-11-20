@@ -38,7 +38,10 @@ const SimulationShell = () => {
         </main>
 
         <aside className="min-h-0 flex-1 overflow-y-auto bg-card shadow-cream-left">
-          <ControlPanel onApplyConfig={applyConfig} />
+          <ControlPanel
+            onApplyConfig={applyConfig}
+            disabled={isPlaying}
+          />
         </aside>
       </div>
     </>

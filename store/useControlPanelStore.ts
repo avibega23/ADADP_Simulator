@@ -1,5 +1,8 @@
+import { CONTROL_PANEL_DEFAULTS } from "@/lib/controlPanelDefaults";
 import { Vector2 } from "@/physics/types";
 import { create } from "zustand";
+
+const defaults = CONTROL_PANEL_DEFAULTS;
 
 interface GroundConfiguration {
   groundDimensions: Vector2;
@@ -59,10 +62,13 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
   //grouund data and methods
   groundConfiguration: {
     groundDimensions: {
-      x: 800,
-      y: 500,
+      x: defaults.ground.width,
+      y: defaults.ground.height,
     },
-    gravity: { x: 0, y: 9.80665 },
+    gravity: {
+      x: defaults.ground.gravityX,
+      y: defaults.ground.gravityY,
+    },
   },
   changeGroundDimension: (dimensions) =>
     set((state) => ({
@@ -81,15 +87,15 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
 
   //object data and methods
   objectConfiguration: {
-    radius: 10,
-    mass: 10,
+    radius: defaults.object.radius,
+    mass: defaults.object.mass,
     position: {
-      x: 100,
-      y: 100,
+      x: defaults.ground.width / 2,
+      y: defaults.ground.height - defaults.object.radius,
     },
     initialVelocity: {
-      x: 0,
-      y: 0,
+      x: defaults.object.velocityX,
+      y: defaults.object.velocityY,
     },
   },
   changeRadius: (value) =>
@@ -123,8 +129,8 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
 
   //simulation data and methods
   simulationConfiguration: {
-    timestep: 1 / 120,
-    timeScale: 1,
+    timestep: defaults.simulation.timestep,
+    timeScale: defaults.simulation.timeScale,
   },
   changeTimeScale: (value) =>
     set((state) => ({
@@ -143,7 +149,7 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
 
   //collision data and methods
   collisionConfiguration: {
-    restitution: 0.8,
+    restitution: defaults.collision.restitution,
   },
   changeRestitution: (value) =>
     set((state) => ({
@@ -155,7 +161,7 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
 
   //render data and methods
   renderConfiguration: {
-    showTrajectory: false,
+    showTrajectory: defaults.render.showTrajectory,
   },
 
   changeShowTrajectory: (value) =>

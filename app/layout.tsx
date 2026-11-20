@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { inconsolata } from "./fonts";
+import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "ADADP Simulator",
@@ -12,7 +13,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={cn("h-full", inconsolata.className)}>
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        {children}
+        <Toaster>{children}</Toaster>
       </body>
     </html>
   );

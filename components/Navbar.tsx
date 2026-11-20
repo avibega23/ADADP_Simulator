@@ -81,8 +81,8 @@ const Navbar = ({ onPause, onPlay, onReset, isPlaying }: NavbarProps) => {
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
         >
-          <GitHubIcon className="size-3.5" />
-          GitHub
+          <GitHubIcon className="size-5.5" />
+          avibega23
         </a>
         <a
           href="https://x.com/avibega23"
@@ -90,8 +90,8 @@ const Navbar = ({ onPause, onPlay, onReset, isPlaying }: NavbarProps) => {
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
         >
-          <XIcon className="size-3.5" />
-          Twitter
+          <XIcon className="size-4.5" />
+          avibega23
         </a>
       </div>
     </nav>

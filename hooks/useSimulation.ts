@@ -7,7 +7,8 @@ import useControlPanelStore from "@/store/useControlPanelStore";
 import { SimulationConfig } from "@/simulation/types";
 import useCanvasScreenStore from "@/store/useCanvasScreenStore";
 import { syncPpm } from "@/lib/ppmSyncer";
-import { objectPositionDefaulter } from "@/lib/objectPositionDefaulter";
+import { fitObjectToWorld } from "@/lib/fitObjectToWorld";
+import { notifySimulationStopped } from "@/lib/simulationToasts";
 
 interface simulationInput {
   createObject: (obect: PhysicsObject) => void;
@@ -27,6 +28,7 @@ const useSimulation = ({
   const renderFrameRef = useRef<number | null>(null);
   const playingRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const hasMountedCanvasRef = useRef(false);
 
   const drawOneFrame = () => {
     const simulation = simulationRef.current;
@@ -88,8 +90,12 @@ const useSimulation = ({
     render();
   };
   const resetSimulation = () => {
-    objectPositionDefaulter();
+    const wasPlaying = playingRef.current;
+    fitObjectToWorld();
     applyConfig();
+    if (wasPlaying) {
+      notifySimulationStopped("reset");
+    }
   };
 
   const pauseSimulation = () => {
@@ -111,10 +117,17 @@ const useSimulation = ({
   const { x, y } = useCanvasScreenStore((s) => s.canvasDimensions);
   useEffect(() => {
     if (x <= 0 || y <= 0) return;
+
+    const wasPlaying = playingRef.current;
     syncPpm("canvas");
-    objectPositionDefaulter();
+    fitObjectToWorld();
     applyConfig();
-    // later: toast "Window resized — simulation stopped"
+
+    // Skip the initial canvas measure — only toast real resizes while playing.
+    if (hasMountedCanvasRef.current && wasPlaying) {
+      notifySimulationStopped("resize");
+    }
+    hasMountedCanvasRef.current = true;
   }, [x, y]);
 
   return {

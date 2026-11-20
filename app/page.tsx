@@ -1,9 +1,10 @@
+import DesktopOnlyGate from "@/components/DesktopOnlyGate";
 import SimulationShell from "@/components/SimulationShell";
 
 export default function Home() {
   return (
-    <div className="flex h-screen flex-col">
+    <DesktopOnlyGate>
       <SimulationShell />
-    </div>
+    </DesktopOnlyGate>
   );
 }
