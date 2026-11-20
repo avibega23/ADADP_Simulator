@@ -1,6 +1,6 @@
 const TelemetryPanel = () => {
   return (
-    <div className="flex flex-1 justify-center items-center h-full bg-gray-700 text-white">
+    <div className="flex h-full flex-1 items-center justify-center bg-card">
       Telemetry Graphs are coming soon
     </div>
   );

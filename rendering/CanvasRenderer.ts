@@ -2,6 +2,7 @@
 import { RefObject, useRef } from "react";
 import { PhysicsObject } from "@/physics/types";
 import { worldToScreen } from "./worldToScreen";
+import { cssVar } from "@/lib/cssVar";
 
 interface canvasRendererReturnType {
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -21,6 +22,9 @@ const useCanvasRenderer = (): canvasRendererReturnType => {
     const screenObject = worldToScreen(object);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    ctx.fillStyle = cssVar("--canvas-background");
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.beginPath();
     ctx.arc(
       screenObject.position.x,
@@ -29,6 +33,7 @@ const useCanvasRenderer = (): canvasRendererReturnType => {
       0,
       Math.PI * 2,
     );
+    ctx.fillStyle = cssVar("--object-fill");
     ctx.fill();
   };
 

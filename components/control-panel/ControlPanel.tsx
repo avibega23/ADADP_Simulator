@@ -9,7 +9,7 @@ interface ControlPanelProps {
 }
 export default function ControlPanel({ onApplyConfig }: ControlPanelProps) {
   return (
-    <div className="flex flex-col gap-6 p-4 text-white">
+    <div className="flex flex-col gap-6 p-4">
       <GroundConfiguration onApplyConfig={onApplyConfig} />
       <ObjectConfiguration onApplyConfig={onApplyConfig} />
       <CollisionConfiguration onApplyConfig={onApplyConfig} />

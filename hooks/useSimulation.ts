@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Simulation } from "@/simulation/Simulation";
 import { SimulationLoop } from "@/simulation/SimulationLoop";
 import type { PhysicsObject } from "@/physics/types";
@@ -17,6 +17,7 @@ interface simulationReturnType {
   resetSimulation: () => void;
   pauseSimulation: () => void;
   applyConfig: () => void;
+  isPlaying: boolean;
 }
 const useSimulation = ({
   createObject,
@@ -24,7 +25,8 @@ const useSimulation = ({
   const simulationRef = useRef<Simulation | null>(null);
   const loopRef = useRef<SimulationLoop | null>(null);
   const renderFrameRef = useRef<number | null>(null);
-  const playingRef = useRef<boolean | null>(false);
+  const playingRef = useRef(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const drawOneFrame = () => {
     const simulation = simulationRef.current;
@@ -69,6 +71,7 @@ const useSimulation = ({
     if (playingRef.current) return;
 
     playingRef.current = true;
+    setIsPlaying(true);
 
     loopRef.current?.start();
 
@@ -91,6 +94,7 @@ const useSimulation = ({
 
   const pauseSimulation = () => {
     playingRef.current = false;
+    setIsPlaying(false);
     loopRef.current?.pause();
 
     if (renderFrameRef.current !== null) {
@@ -118,6 +122,7 @@ const useSimulation = ({
     pauseSimulation,
     resetSimulation,
     applyConfig,
+    isPlaying,
   };
 };
 

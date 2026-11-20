@@ -46,8 +46,7 @@ export default function SimulationCanvas({ canvasRef }: SimulationCanvasProps) {
         ref={canvasRef}
         width={canvasDimensions.x}
         height={canvasDimensions.y}
-        className="block h-full w-full"
-        style={{ backgroundColor: "red" }}
+        className="block h-full w-full bg-canvas"
       />
     </div>
   );
