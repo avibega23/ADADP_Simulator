@@ -1,4 +1,5 @@
 import { EARTH_GRAVITY } from "@/physics/constants";
+import type { ChartId } from "@/components/telemetry/chartConfig";
 
 export const CONTROL_PANEL_DEFAULTS = {
   ground: {
@@ -20,7 +21,15 @@ export const CONTROL_PANEL_DEFAULTS = {
     timestep: 1 / 120,
     timeScale: 1,
   },
-  render: {
-    showTrajectory: false,
+  charts: {
+    visibility: {
+      velocity: true,
+      acceleration: true,
+      position: true,
+      speed: true,
+      kineticEnergy: true,
+      trajectory: true,
+    } satisfies Record<ChartId, boolean>,
+    showCanvasTrajectory: false,
   },
 } as const;

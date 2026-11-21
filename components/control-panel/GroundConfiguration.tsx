@@ -67,7 +67,7 @@ export default function GroundConfiguration({
         step={1}
         commitMode="live"
         disabled={disabled}
-        description="Updates live; height follows canvas aspect via ppm."
+        description="Enter Width in Meters. Simulator will automatically adjust height acc. to canvas"
         onChange={(x) => applyWorldChange("width", x)}
       />
       <NumberField
@@ -79,7 +79,7 @@ export default function GroundConfiguration({
         step={1}
         commitMode="live"
         disabled={disabled}
-        description="Updates live; width follows canvas aspect via ppm."
+        description="Enter Height in Meters. Simulator will automatically adjust width acc. to canvas"
         onChange={(y) => applyWorldChange("height", y)}
       />
       <SliderField
@@ -110,7 +110,7 @@ export default function GroundConfiguration({
         step={0.01}
         disabled={disabled}
         formatValue={(v) => v.toFixed(2)}
-        description="Panel stores downward strength as positive."
+        description="Positive Gravity acts Downward. Eg 9.81 to Simulate Earth's Gravity"
         onChange={(y) => {
           changeGravity({
             x: gravity.x,

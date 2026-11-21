@@ -42,7 +42,7 @@ export default function SimulationConfiguration({
         max={0.1}
         step={0.001}
         disabled={disabled}
-        description="Fixed step used by the loop when wired up."
+        description="Fixed timestep used by the simulation"
         onChange={changeTimeStep}
       />
       <SliderField

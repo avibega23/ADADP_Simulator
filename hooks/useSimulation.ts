@@ -9,6 +9,7 @@ import useCanvasScreenStore from "@/store/useCanvasScreenStore";
 import { syncPpm } from "@/lib/ppmSyncer";
 import { fitObjectToWorld } from "@/lib/fitObjectToWorld";
 import { notifySimulationStopped } from "@/lib/simulationToasts";
+import useTelemetryStore from "@/store/useTelemetryStore";
 
 interface simulationInput {
   createObject: (obect: PhysicsObject) => void;
@@ -33,7 +34,20 @@ const useSimulation = ({
   const drawOneFrame = () => {
     const simulation = simulationRef.current;
     if (!simulation) return;
-    createObject(simulation.getState().object);
+    const { object, time } = simulation.getState();
+    createObject(object);
+    const speed = Math.hypot(object.velocity.x, object.velocity.y);
+    useTelemetryStore.getState().pushSample({
+      t: time,
+      x: object.position.x,
+      y: object.position.y,
+      vx: object.velocity.x,
+      vy: object.velocity.y,
+      ax: object.acceleration.x,
+      ay: object.acceleration.y,
+      speed,
+      ke: 0.5 * object.mass * speed * speed,
+    });
   };
 
   const createSimulation = () => {
@@ -110,6 +124,7 @@ const useSimulation = ({
   };
 
   const applyConfig = () => {
+    useTelemetryStore.getState().clearSamples();
     pauseSimulation();
     createSimulation();
   };

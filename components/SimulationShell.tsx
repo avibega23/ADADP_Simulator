@@ -19,32 +19,27 @@ const SimulationShell = () => {
   });
 
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <Navbar
         onPlay={playSimulation}
         onPause={pauseSimulation}
         onReset={resetSimulation}
         isPlaying={isPlaying}
       />
-      <div className="flex min-h-0 flex-1">
-        <main className="flex min-w-0 flex-3 flex-col">
-          <section className="flex-1 min-h-0">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div className="flex min-h-0 flex-1">
+          <section className="min-h-0 min-w-0 flex-3">
             <SimulationCanvas canvasRef={canvasRef} />
           </section>
-
-          <section className="h-80 shrink-0 shadow-cream-top">
-            <TelemetryPanel />
-          </section>
-        </main>
-
-        <aside className="min-h-0 flex-1 overflow-y-auto bg-card shadow-cream-left">
-          <ControlPanel
-            onApplyConfig={applyConfig}
-            disabled={isPlaying}
-          />
-        </aside>
+          <aside className="min-h-0 flex-1 overflow-y-auto bg-card shadow-cream-left">
+            <ControlPanel onApplyConfig={applyConfig} disabled={isPlaying} />
+          </aside>
+        </div>
+        <section className="h-120 w-full shrink-0 shadow-cream-top bg-card">
+          <TelemetryPanel />
+        </section>
       </div>
-    </>
+    </div>
   );
 };
 

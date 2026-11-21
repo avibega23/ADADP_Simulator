@@ -18,7 +18,9 @@ export default function DesktopOnlyGate({ children }: DesktopOnlyGateProps) {
           desktop or laptop to experience the full simulator.
         </p>
       </div>
-      <div className="hidden h-screen flex-col lg:flex">{children}</div>
+      <div className="hidden h-screen min-h-0 flex-col overflow-hidden lg:flex">
+        {children}
+      </div>
     </>
   );
 }

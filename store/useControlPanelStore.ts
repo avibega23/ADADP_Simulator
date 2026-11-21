@@ -1,3 +1,4 @@
+import type { ChartId } from "@/components/telemetry/chartConfig";
 import { CONTROL_PANEL_DEFAULTS } from "@/lib/controlPanelDefaults";
 import { Vector2 } from "@/physics/types";
 import { create } from "zustand";
@@ -26,8 +27,9 @@ interface CollisionConfiguration {
   restitution: number;
 }
 
-interface RenderConfiguration {
-  showTrajectory: boolean;
+interface ChartsConfiguration {
+  visibility: Record<ChartId, boolean>;
+  showCanvasTrajectory: boolean;
 }
 
 interface ControlPanelStore {
@@ -53,9 +55,11 @@ interface ControlPanelStore {
   //collision methods
   changeRestitution: (value: number) => void;
 
-  renderConfiguration: RenderConfiguration;
-  //redner methdods
-  changeShowTrajectory: (value: boolean) => void;
+  chartsConfiguration: ChartsConfiguration;
+  //charts methods
+  changeChartVisibility: (id: ChartId, visible: boolean) => void;
+  changeShowCanvasTrajectory: (value: boolean) => void;
+  resetChartsConfiguration: () => void;
 }
 
 const useControlPanelStore = create<ControlPanelStore>((set) => ({
@@ -159,18 +163,35 @@ const useControlPanelStore = create<ControlPanelStore>((set) => ({
       },
     })),
 
-  //render data and methods
-  renderConfiguration: {
-    showTrajectory: defaults.render.showTrajectory,
+  //charts data and methods
+  chartsConfiguration: {
+    visibility: { ...defaults.charts.visibility },
+    showCanvasTrajectory: defaults.charts.showCanvasTrajectory,
   },
-
-  changeShowTrajectory: (value) =>
+  changeChartVisibility: (id, visible) =>
     set((state) => ({
-      renderConfiguration: {
-        ...state.renderConfiguration,
-        showTrajectory: value,
+      chartsConfiguration: {
+        ...state.chartsConfiguration,
+        visibility: {
+          ...state.chartsConfiguration.visibility,
+          [id]: visible,
+        },
       },
     })),
+  changeShowCanvasTrajectory: (value) =>
+    set((state) => ({
+      chartsConfiguration: {
+        ...state.chartsConfiguration,
+        showCanvasTrajectory: value,
+      },
+    })),
+  resetChartsConfiguration: () =>
+    set({
+      chartsConfiguration: {
+        visibility: { ...defaults.charts.visibility },
+        showCanvasTrajectory: defaults.charts.showCanvasTrajectory,
+      },
+    }),
 }));
 
 export default useControlPanelStore;

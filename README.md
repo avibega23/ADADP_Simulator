@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ADADP Simulator
 
-## Getting Started
+**Atmospheric Drag And Dynamics Physics** — an interactive 2D physics simulator for exploring free fall, collisions, and motion under gravity.
 
-First, run the development server:
+> **Try it live:** [adadp.avibega.tech](https://adadp.avibega.tech)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Built for desktop and laptop screens.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What it does
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Configure a world, drop an object, and watch the simulation respond in real time. Tune gravity, mass, restitution, and initial velocity from the control panel, then inspect the motion through live telemetry charts.
 
-## Learn More
+### Simulation
 
-To learn more about Next.js, take a look at the following resources:
+- Constant-g free-fall integration with ground and wall collisions
+- Configurable world size, gravity, object radius/mass, and initial velocity
+- Restitution (bounciness) on floor impacts
+- Play / pause / reset playback controls
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Telemetry
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Live charts driven by the simulation state:
 
-## Deploy on Vercel
+| Chart | What it shows |
+| --- | --- |
+| Velocity vs time | `vx`, `vy` |
+| Acceleration vs time | `ax`, `ay` |
+| Position vs time | `x`, `y` |
+| Speed vs time | `√(vx² + vy²)` |
+| Kinetic energy vs time | `½ m \|v\|²` |
+| Trajectory | `y` vs `x` |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Toggle any chart from the **Charts** section in the control panel.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Interface
+
+- Canvas viewport with world ↔ pixel scaling
+- Scrollable control panel for ground, object, collision, and simulation settings
+- Full-width telemetry strip under the canvas and panel
+- Desktop-first layout (mobile visitors see a clear “use a computer” gate)
+
+---
+
+## Stack
+
+- [Next.js](https://nextjs.org) · [React](https://react.dev) · [TypeScript](https://www.typescriptlang.org)
+- [Zustand](https://zustand-demo.pmnd.rs) for app state
+- [Recharts](https://recharts.org) for telemetry
+- [Tailwind CSS](https://tailwindcss.com) · [shadcn/ui](https://ui.shadcn.com)
+
+---
+
+## License
+
+This project is open source under the [MIT License](./LICENSE).
+
+---
+
+## Author
+
+Built by [avibega23](https://github.com/avibega23) · [@avibega23](https://x.com/avibega23)

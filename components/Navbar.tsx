@@ -41,7 +41,7 @@ function XIcon({ className }: { className?: string }) {
 
 const Navbar = ({ onPause, onPlay, onReset, isPlaying }: NavbarProps) => {
   return (
-    <nav className="z-10 flex items-center justify-between bg-card px-16 py-4 shadow-cream-xs">
+    <nav className="z-10 flex shrink-0 items-center justify-between bg-card px-16 py-4 shadow-cream-xs">
       <Link
         href="/"
         className={cn("cursor-pointer text-2xl", shantellSans.className)}
