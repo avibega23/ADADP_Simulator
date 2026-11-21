@@ -22,7 +22,6 @@ export default function ChartsConfiguration({
   const {
     chartsConfiguration,
     changeChartVisibility,
-    changeShowCanvasTrajectory,
     resetChartsConfiguration,
   } = useControlPanelStore();
 
@@ -31,8 +30,7 @@ export default function ChartsConfiguration({
     chartsConfiguration.showCanvasTrajectory ===
       defaults.showCanvasTrajectory &&
     CHART_IDS.every(
-      (id) =>
-        chartsConfiguration.visibility[id] === defaults.visibility[id],
+      (id) => chartsConfiguration.visibility[id] === defaults.visibility[id],
     );
 
   return (
@@ -48,11 +46,7 @@ export default function ChartsConfiguration({
       {CHART_IDS.map((id) => {
         const inputId = `chart-show-${id}`;
         return (
-          <Field
-            key={id}
-            orientation="horizontal"
-            className="items-center"
-          >
+          <Field key={id} orientation="horizontal" className="items-center">
             <Checkbox
               id={inputId}
               checked={chartsConfiguration.visibility[id]}
@@ -68,23 +62,6 @@ export default function ChartsConfiguration({
           </Field>
         );
       })}
-      <Field orientation="horizontal" className="items-center">
-        <Checkbox
-          id="chart-show-canvas-trajectory"
-          checked={chartsConfiguration.showCanvasTrajectory}
-          disabled={disabled}
-          onCheckedChange={(checked) => {
-            if (disabled) return;
-            changeShowCanvasTrajectory(checked);
-          }}
-        />
-        <FieldLabel
-          htmlFor="chart-show-canvas-trajectory"
-          className="font-normal"
-        >
-          Show trajectory on canvas
-        </FieldLabel>
-      </Field>
     </PanelSection>
   );
 }
