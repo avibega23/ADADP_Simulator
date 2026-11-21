@@ -27,7 +27,7 @@ const SimulationShell = () => {
         isPlaying={isPlaying}
       />
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <div className="flex min-h-0 flex-1">
+        <div className="flex min-h-0 flex-3">
           <section className="min-h-0 min-w-0 flex-3">
             <SimulationCanvas canvasRef={canvasRef} />
           </section>
@@ -35,7 +35,7 @@ const SimulationShell = () => {
             <ControlPanel onApplyConfig={applyConfig} disabled={isPlaying} />
           </aside>
         </div>
-        <section className="h-120 w-full shrink-0 shadow-cream-top bg-card">
+        <section className="flex-1 w-full shrink-0 shadow-cream-top bg-card">
           <TelemetryPanel />
         </section>
       </div>
